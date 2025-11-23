@@ -271,7 +271,8 @@ function calcPlayerStats() {
 
   // Riduzione danno (stessa formula di prima)
   stats.playerStats.damageResistance.value =
-    stats.playerStats.armor.value * 0.003 * 100;
+    (stats.playerStats.armor.value / (stats.playerStats.armor.value + 500)) *
+    100;
 }
 
 // Ritorna quale perk è selezionato (0 = primo, 1 = secondo, -1 = nessuno)

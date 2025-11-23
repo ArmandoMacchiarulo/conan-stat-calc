@@ -1,25 +1,38 @@
+// Elementi per livello / punti in alto
+let characterLevel_html = document.getElementsByClassName("character-level")[0];
+let unspentPoints_html = document.getElementsByClassName("unspent-points")[0];
+let currentExperience_html =
+  document.getElementsByClassName("current-experience")[0];
 // Initial Points //
-let characterLevel_html    = document.getElementsByClassName("character-level")[0];
-let unspentPoints_html     = document.getElementsByClassName("unspent-points")[0];
-let currentExperience_html = document.getElementsByClassName("current-experience")[0];
-let strength_html          = document.getElementsByClassName("strength current-level")[0];
-let agility_html           = document.getElementsByClassName("agility current-level")[0];
-let vitality_html          = document.getElementsByClassName("vitality current-level")[0];
-let accuracy_html          = document.getElementsByClassName("accuracy current-level")[0];
-let grit_html              = document.getElementsByClassName("grit current-level")[0];
-let encumbrance_html       = document.getElementsByClassName("encumbrance current-level")[0];
-let survival_html          = document.getElementsByClassName("survival current-level")[0];
+let strength_html = document.getElementsByClassName(
+  "strength current-level"
+)[0];
+let agility_html = document.getElementsByClassName("agility current-level")[0];
+let vitality_html = document.getElementsByClassName(
+  "vitality current-level"
+)[0];
+let authority_html = document.getElementsByClassName(
+  "authority current-level"
+)[0];
+let grit_html = document.getElementsByClassName("grit current-level")[0];
+let expertise_html = document.getElementsByClassName(
+  "expertise current-level"
+)[0];
+
 adjustPoints();
 
 // Initial playerStats //
-let health_html              = document.getElementsByClassName("health")[0];
-let stamina_html             = document.getElementsByClassName("stamina")[0];
-let encumbrance_heading_html = document.getElementsByClassName("encumbrance-heading")[0];
-let encumbrance_player_html  = document.getElementsByClassName("encumbrance-player")[0];
-let melee_html               = document.getElementsByClassName("melee")[0];
-let ranged_html              = document.getElementsByClassName("ranged")[0];
-let armor_html               = document.getElementsByClassName("armor")[0];
-let dmg_resist_html          = document.getElementsByClassName("dmg-resist")[0];
+let health_html = document.getElementsByClassName("health")[0];
+let stamina_html = document.getElementsByClassName("stamina")[0];
+let encumbrance_heading_html = document.getElementsByClassName(
+  "encumbrance-heading"
+)[0];
+let encumbrance_player_html =
+  document.getElementsByClassName("encumbrance-player")[0];
+let melee_html = document.getElementsByClassName("melee")[0];
+let ranged_html = document.getElementsByClassName("ranged")[0];
+let armor_html = document.getElementsByClassName("armor")[0];
+let dmg_resist_html = document.getElementsByClassName("dmg-resist")[0];
 adjustPlayerStats();
 
 // Update & adjustment functions //
@@ -32,29 +45,30 @@ function update(statString) {
 }
 
 function adjustPoints() {
-  stats.lifetimePoints             = stats.unspentPoints + stats.spentPoints;
+  stats.lifetimePoints = stats.unspentPoints + stats.spentPoints;
 
-  characterLevel_html.innerText    = stats.characterLevel;
-  unspentPoints_html.innerText     = stats.unspentPoints;
+  characterLevel_html.innerText = stats.characterLevel;
+  unspentPoints_html.innerText = stats.unspentPoints;
   currentExperience_html.innerText = stats.currentExperience;
-  strength_html.innerText          = stats.strength.value;
-  agility_html.innerText           = stats.agility.value;
-  vitality_html.innerText          = stats.vitality.value;
-  accuracy_html.innerText          = stats.accuracy.value;
-  grit_html.innerText              = stats.grit.value;
-  encumbrance_html.innerText       = stats.encumbrance.value;
-  survival_html.innerText          = stats.survival.value;
+
+  strength_html.innerText = stats.strength.value;
+  agility_html.innerText = stats.agility.value;
+  vitality_html.innerText = stats.vitality.value;
+  authority_html.innerText = stats.authority.value;
+  grit_html.innerText = stats.grit.value;
+  expertise_html.innerText = stats.expertise.value;
 }
 
 function adjustPlayerStats() {
-  health_html.innerText              = stats.playerStats.health.value;
-  stamina_html.innerText             = stats.playerStats.stamina.value;
+  health_html.innerText = stats.playerStats.health.value;
+  stamina_html.innerText = stats.playerStats.stamina.value;
   encumbrance_heading_html.innerText = stats.playerStats.encumbrance.value;
-  encumbrance_player_html.innerText  = stats.playerStats.encumbrance.value;
-  melee_html.innerText               = Math.round(stats.playerStats.melee.value) + "%";
-  ranged_html.innerText              = Math.round(stats.playerStats.ranged.value) + "%";
-  armor_html.innerText               = stats.playerStats.armor.value;
-  dmg_resist_html.innerText          = precisionRound(stats.playerStats.damageResistance.value, 1) + "%";
+  encumbrance_player_html.innerText = stats.playerStats.encumbrance.value;
+  melee_html.innerText = Math.round(stats.playerStats.melee.value) + "%";
+  ranged_html.innerText = Math.round(stats.playerStats.ranged.value) + "%";
+  armor_html.innerText = stats.playerStats.armor.value;
+  dmg_resist_html.innerText =
+    precisionRound(stats.playerStats.damageResistance.value, 1) + "%";
 }
 
 // Increase/Decrease stat functions
@@ -75,7 +89,9 @@ function levelDown() {
     document.getElementsByClassName("max-level")[0].disabled = false;
   }
   if (stats.unspentPoints < adjustAttrPoints(stats.characterLevel)) {
-    return alert("You must first remove attributes before leveling down your Exile.  You cannot remove what you've already spent!");
+    return alert(
+      "You must first remove attributes before leveling down your Exile.  You cannot remove what you've already spent!"
+    );
   }
   stats.unspentPoints -= adjustAttrPoints(stats.characterLevel);
   stats.availableFeats -= adjustFeatPoints(stats.characterLevel);
@@ -88,30 +104,31 @@ function levelDown() {
 function statUp(statString) {
   let stat = stats[statString].value;
   let name = capitalizeFirst(statString);
-  let cost = getAttrCost(stat);
-  if (stat == 50)
-    return false;
-  if (cost > stats.unspentPoints)
-    return false;
+
+  // nuovo cap: 20
+  if (stat >= 20) return false;
+  if (stats.unspentPoints <= 0) return false;
 
   stat += 1;
-  stats.unspentPoints -= cost;
-  stats.spentPoints += cost;
+  stats.unspentPoints -= 1;
+  stats.spentPoints += 1;
   stats[statString].value = stat;
+
   update(statString);
-  console.log(name + " Up!");
+  console.log(name + " up!");
 }
 
 function statDown(statString) {
   let stat = stats[statString].value;
-  if (stat == 0) return false;
+  if (stat <= 0) return false;
 
   stat -= 1;
   let name = capitalizeFirst(statString);
-  let cost = getAttrCost(stat);
-  stats.unspentPoints += cost;
-  stats.spentPoints -= cost;
+
+  stats.unspentPoints += 1;
+  stats.spentPoints -= 1;
   stats[statString].value = stat;
+
   update(statString);
   console.log(name + " down :(");
 }
@@ -125,11 +142,15 @@ function mouseHold(level) {
 }
 
 function mouseHoldStatUp(statString) {
-  mouseHoldInterval = setInterval(function() {statUp(statString);}, 120);
+  mouseHoldInterval = setInterval(function () {
+    statUp(statString);
+  }, 120);
 }
 
 function mouseHoldStatDown(statString) {
-  mouseHoldInterval = setInterval(function() {statDown(statString);}, 120);
+  mouseHoldInterval = setInterval(function () {
+    statDown(statString);
+  }, 120);
 }
 
 function mouseReleaseStat() {
@@ -145,7 +166,6 @@ function precisionRound(number, precision) {
   return Math.round(number * factor) / factor;
 }
 
-
 // Apply mouseup/mouseleave event listeners to all stat buttons
 // that clear the mouseHoldInterval for modifying stats
 
@@ -156,7 +176,7 @@ for (var i = 0; i < statButtons.length; i++) {
   statButtons[i].addEventListener("mouseleave", mouseReleaseStat);
 }
 
-var levelUp_html   = document.getElementsByClassName("level-up")[0];
+var levelUp_html = document.getElementsByClassName("level-up")[0];
 var levelDown_html = document.getElementsByClassName("level-down")[0];
 
 function createLevelButton(element, buttonFunc) {
@@ -167,47 +187,123 @@ function createLevelButton(element, buttonFunc) {
 createLevelButton(levelUp_html, levelUp);
 createLevelButton(levelDown_html, levelDown);
 
-document.getElementsByClassName("max-level")[0].addEventListener("click", function() {
-  maxOutLevel();
-});
+document
+  .getElementsByClassName("max-level")[0]
+  .addEventListener("click", function () {
+    maxOutLevel();
+  });
 
 //Reset buttons - all points and levels reverted to base values  +function createStatButtons(stat) {
-document.getElementsByClassName("reset-all")[0].addEventListener("click", resetAll);
-document.getElementsByClassName("reset-attributes")[0].addEventListener("click", resetAttributes);
+document
+  .getElementsByClassName("reset-all")[0]
+  .addEventListener("click", resetAll);
+document
+  .getElementsByClassName("reset-attributes")[0]
+  .addEventListener("click", resetAttributes);
 
 function createStatButtons(stat) {
-  document.getElementsByClassName(stat + "-up")[0].addEventListener("click", statUp.bind(null, stat));
-  document.getElementsByClassName(stat + "-up")[0].addEventListener("mousedown", mouseHoldStatUp.bind(null, stat));
-  document.getElementsByClassName(stat + "-down")[0].addEventListener("click", statDown.bind(null, stat));
-  document.getElementsByClassName(stat + "-down")[0].addEventListener("mousedown", mouseHoldStatDown.bind(null, stat));
+  document
+    .getElementsByClassName(stat + "-up")[0]
+    .addEventListener("click", statUp.bind(null, stat));
+  document
+    .getElementsByClassName(stat + "-up")[0]
+    .addEventListener("mousedown", mouseHoldStatUp.bind(null, stat));
+  document
+    .getElementsByClassName(stat + "-down")[0]
+    .addEventListener("click", statDown.bind(null, stat));
+  document
+    .getElementsByClassName(stat + "-down")[0]
+    .addEventListener("mousedown", mouseHoldStatDown.bind(null, stat));
 }
 
 let currentActive = "strength";
 
-stats.allStats.forEach(function(attribute, i) {
+stats.allStats.forEach(function (attribute, i) {
   createStatButtons(attribute);
 
-  document.getElementsByClassName("reset-attribute")[i].addEventListener("click", function() {
-    resetAttribute(stats.allStats[i]);
-  });
-  document.getElementsByClassName("max-attribute")[i].addEventListener("click", function() {
-    maxOutAttribute(stats.allStats[i]);
-  });
+  document
+    .getElementsByClassName("reset-attribute")
+    [i].addEventListener("click", function () {
+      resetAttribute(stats.allStats[i]);
+    });
+  document
+    .getElementsByClassName("max-attribute")
+    [i].addEventListener("click", function () {
+      maxOutAttribute(stats.allStats[i]);
+    });
 
   //cache attr-div & progress-bar for each attribute. then,
   let hoverElementsForToggle = [];
-  hoverElementsForToggle[0] = document.getElementsByClassName("attr-div " + stats.allStats[i])[0];
-  hoverElementsForToggle[1] = document.getElementsByClassName("progress-bar " + stats.allStats[i])[0];
+  hoverElementsForToggle[0] = document.getElementsByClassName(
+    "attr-div " + stats.allStats[i]
+  )[0];
+  hoverElementsForToggle[1] = document.getElementsByClassName(
+    "progress-bar " + stats.allStats[i]
+  )[0];
 
   // mouseover on hoverElements to toggle active class on current 'mouseover' attribute
-  hoverElementsForToggle.forEach(function(element) {
+  hoverElementsForToggle.forEach(function (element) {
     element.addEventListener("mouseover", function () {
       if (stats.allStats[i] != currentActive) {
-      document.getElementsByClassName("bonuses " + stats.allStats[i])[0].classList.add("active");
-      document.getElementsByClassName("bonuses " + currentActive)[0].classList.remove("active");
-      currentActive = stats.allStats[i];
+        document
+          .getElementsByClassName("bonuses " + stats.allStats[i])[0]
+          .classList.add("active");
+        document
+          .getElementsByClassName("bonuses " + currentActive)[0]
+          .classList.remove("active");
+        currentActive = stats.allStats[i];
       }
     });
   });
+});
 
+// ----------------------------
+// Perk radio buttons handling
+// ----------------------------
+function initPerkRadios() {
+  // elenco degli attributi (deve matchare stats.allStats)
+  var attrs = [
+    "strength",
+    "agility",
+    "vitality",
+    "authority",
+    "grit",
+    "expertise",
+  ];
+  var perkLevels = [10, 20];
+
+  attrs.forEach(function (attr) {
+    perkLevels.forEach(function (lvl) {
+      var selector = 'input[name="' + attr + "-" + lvl + '"]';
+      var radios = document.querySelectorAll(selector);
+
+      radios.forEach(function (radio) {
+        radio.addEventListener("change", function () {
+          var perkKey = "perk" + lvl; // "perk10" o "perk20"
+          stats[attr][perkKey] = this.value;
+
+          // Aggiorna immediatamente icone + barra per questo attributo
+          adjustBonuses(attr); // assicura che _10/_20 siano corretti
+          adjustProgress(attr); // ricalcola icone t2/t4 e sfondo teir*
+          console.log(attr + " " + perkKey + " set to:", this.value);
+        });
+
+        // Se stats ha già un valore, lo riflettiamo nel radio (es. dopo reset)
+        var perkKey = "perk" + lvl;
+        if (stats[attr][perkKey] && radio.value === stats[attr][perkKey]) {
+          radio.checked = true;
+        }
+      });
+    });
+  });
+}
+
+// Inizializza i radio quando il DOM è pronto
+window.addEventListener("DOMContentLoaded", function () {
+  initPerkRadios();
+});
+
+// Inizializza i radio quando il DOM è pronto
+window.addEventListener("DOMContentLoaded", function () {
+  initPerkRadios();
 });

@@ -1,163 +1,154 @@
-/* Conan Stat Calculator */
-/*@import url('https://fonts.googleapis.com/css?family=Jomhuria');*/
+/* ===========================
+   Conan Exiles Stat Calculator
+   Layout flex a due colonne
+   =========================== */
+
+/* ---------- BASE ---------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
 
 body {
   margin: 0;
   background-image: url(../images/background.jpg);
+  background-size: cover;
+  background-attachment: fixed;
+  font-family: Helvetica, Arial, sans-serif;
+  color: #ece4c6;
 }
 
-.conan-stat-calculator .calc-table .calc-thead th {
-  text-align: center;
+button {
+  font-family: inherit;
+}
+
+/* ---------- CONTENITORE PRINCIPALE ---------- */
+
+.conan-stat-calculator {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 16px 8px 32px;
+}
+
+/* Logo + titolo */
+
+.conanimg {
+  display: block;
+  margin: 0 auto 8px;
+  max-width: 100%;
+  height: auto;
+}
+
+.calc-title {
+  font-family: "Jomhuria", serif;
   font-weight: normal;
+  text-align: center;
+  font-size: 64px;
+  letter-spacing: 2px;
+  margin: 0 0 16px;
+  color: #f4e0b9;
 }
 
-.conan-stat-calculator .calc-table button {
+/* ---------- LAYOUT A DUE COLONNE ---------- */
+
+.calc-layout {
+  display: flex;
+  align-items: stretch;
+  gap: 16px;
+}
+
+/* sinistra: level + attributi */
+.calc-left {
+  flex: 0 0 60%;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid #3b3321;
+  box-shadow: 0 0 10px #000;
+  padding: 12px 16px 16px;
+}
+
+/* destra: bonuses */
+.calc-right {
+  flex: 0 0 40%;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid #3b3321;
+  box-shadow: 0 0 10px #000;
+  padding: 12px 16px 16px;
+}
+
+/* contenitore interno, per riferimenti JS */
+.calc-table {
+  width: 100%;
+}
+
+/* Responsivo: sotto una certa larghezza, le colonne vanno in pila */
+
+@media (max-width: 900px) {
+  .calc-layout {
+    flex-direction: column;
+  }
+
+  .calc-left,
+  .calc-right {
+    flex: 1 1 auto;
+  }
+}
+
+/* ---------- HEADER (LIVELLO, ENCUMBRANCE, XP) ---------- */
+
+.calc-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 10px;
+}
+
+/* lato sinistro header */
+
+.header-main {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.character-title {
+  font-size: 24px;
+  line-height: 1.2;
+}
+
+.character-title .stat-button {
+  margin: 0 2px;
+}
+
+/* lato destro header */
+
+.header-stats {
+  text-align: right;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.encumbrance-th,
+.movement-penalty,
+.experience {
+  white-space: nowrap;
+}
+
+/* ---------- BOTTONI ---------- */
+
+.calc-table button {
   background-image: url(../images/ButtonNormal.png);
+  background-size: 100% 100%;
   border-left: 0;
   border-right: 0;
   border-top: 2px solid grey;
   border-bottom: 1px solid grey;
-  color: #ECE4C6;
+  color: #ece4c6;
   font-weight: bold;
-}
-
-.conan-stat-calculator {
-  color: #ddc271;
-  font-family: Jomhuria;
-  font-size: 30px;
-}
-
-.conan-stat-calculator .conanimg {
-  height:auto;
-  max-width: 100%;
-  border: 0;
-  display: block;
-  margin: 0 auto;
-}
-
-.conan-stat-calculator .calc-title {
-  font-weight: normal;
-  text-align: center;
-  margin: 0 auto;
-}
-
-.conan-stat-calculator .calc-table {
-  width: 95%;
-  min-width: 1140px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.conan-stat-calculator .calc-table,
-.conan-stat-calculator .calc-table .attribute-td,
-.conan-stat-calculator .calc-table .player-stats,
-.conan-stat-calculator .calc-table .reset,
-.conan-stat-calculator .calc-table .progress-bar {
-  border-collapse: collapse;
-  padding: 5px;
-}
-
-.calc-table .character-title {
-  font-size: 1.5em;
-}
-
-.calc-table .stat-button {
-  font-weight: bold;
-  font-size: 16px;
-  white-space: pre;
-  position: relative;
-  top: 1px;
-  width: 30px;
-}
-
-.calc-table .calc-thead .player-stats {
-  width: 12%;
-}
-
-.calc-table .experience {
-  min-width: 502px;
-}
-
-.calc-table .current-level {
-  background-image: url(../images/StatField.png);
-  width: 68px;
-  background-size: 100% 100%;
-  text-align: right;
-  padding-right: 20px;
-  display: inline-block;
-  padding-top: 2px;
-}
-
-.calc-table .attr-div {
-  width: 100%;
-  display: inline-flex;
-  justify-content: space-between;
-}
-
-.calc-table .stat-icon {
-  vertical-align: middle;
-}
-
-.calc-table .attribute {
-  text-transform: uppercase;
-}
-
-.calc-table .cost {
-  padding-right: 10px;
-}
-
-.calc-table .max-attribute {
-  width: 48px;
-}
-
-.calc-table .attribute,
-.calc-table .current-level,
-.calc-table .cost {
-  border: 0;
-}
-
-.calc-table .reset-attribute,
-.calc-table .max-attribute,
-.calc-table .stat-button {
-  line-height: 25px;
-  padding-top: 0;
-  padding-bottom: 0;
-}
-
-.calc-table .calc-thead {
-  background-image: url(../images/BgTopBanner.png);
-  background-size: 100% 100%;
-  border-left: 1px solid grey;
-  border-right: 1px solid grey;
-}
-
-.calc-table .calc-tbody,
-.calc-table .calc-tbody td {
-  border: 1px solid grey;
-  border-collapse: collapse;
-}
-
-.calc-table td.bonuses {
-  background-image: url(../images/BgFeats.png);
-  background-size: 100% 100%;
-}
-
-/* FULL RESETS */
-.calc-table .reset {
-  text-align: center;
-}
-
-.calc-table .reset-all,
-.calc-table .reset-attributes {
-  background-size: cover;
-}
-
-.calc-table .reset-all {
-  width: 33%
-}
-
-.calc-table .reset-attributes {
-  width: 33%;
+  cursor: pointer;
+  padding: 2px 8px;
 }
 
 .calc-table button:hover {
@@ -165,144 +156,283 @@ body {
   color: black;
 }
 
-/* PROGRESS BARS */
-.calc-table .progress-bar {
-  width: 60%;
-  display: table-cell;
-  background-image: url(../images/teir0.png);
-  background-size:100% 100%;
-  height: 30px;
+.stat-button {
+  font-weight: bold;
+  font-size: 16px;
+  white-space: pre;
+  width: 30px;
+  padding: 1px 0;
 }
 
-.calc-table .progress {
-  width: 0;
-  background-color: rgb(221, 194, 150);
-  background-color: rgba(221, 194, 150,.2);
-  position:relative;
-  left: -5px;
-  height: 12px;
-  transition: .1s
+.max-level {
+  align-self: flex-start;
+  margin-top: 2px;
+  padding: 4px 10px;
 }
 
-.calc-table .perk-1 {
-  background-image: url(../images/teir1.png);
-}
-.calc-table .perk-2 {
-  background-image: url(../images/teir2.png);
-}
-.calc-table .perk-3 {
-  background-image: url(../images/teir3.png);
-}
-.calc-table .perk-4 {
-  background-image: url(../images/teir4.png);
-}
-.calc-table .perk-5 {
-  background-image: url(../images/teir5.png);
+/* ---------- PLAYER STATS (colonna piccola) ---------- */
+
+.header-and-player {
+  margin-bottom: 12px;
 }
 
-.player-stats .health, .player-stats .stamina, .player-stats .encumbrance-player, .player-stats .melee,
-.player-stats .ranged, .player-stats .armor, .player-stats .dmg-resist {
-  display: table-cell;
-  text-align: right;
-}
-
-.calc-table .calc-tbody .player-stats ul {
-  list-style-type: none;
-  padding-left: 30px;
-}
-
-.calc-table .calc-tbody .player-stats li span:first-child {
-  display: table-cell;
-}
-
-.calc-table .calc-tbody .player-stats li span:last-child {
-  display: table-cell;
-  width: 100%;
-  padding-left: 3px;
-  padding-right: 10%;
-}
-
-/* BONUSES */
-
-.calc-table .bonuses {
-  color: #ECE4C6;
+.player-stats ul {
+  list-style: none;
   padding: 0;
+  margin: 0;
 }
 
-.calc-table .bonuses-container {
-  height: 619px;
-  padding-right: 25px;
+.player-stats li {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  padding: 1px 0;
 }
 
-.calc-table .bonus-heading {
-  text-align: center;
-  font-size: 1.5em;
+.player-stats span:first-child {
+  margin-right: 6px;
+}
+
+/* ---------- RIGHE ATTRIBUTI ---------- */
+
+.calc-tbody {
+  margin-top: 4px;
+}
+
+/* blocco per ogni attributo (Strength, Agility, …) */
+.attribute-row {
+  margin-bottom: 10px;
+}
+
+/* parte alta: icona + nome + valori + pulsanti */
+.attr-div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.attr-div > div {
+  display: flex;
+  align-items: center;
+}
+
+.stat-icon {
+  vertical-align: middle;
+  margin-right: 4px;
+}
+
+.attribute {
   text-transform: uppercase;
-}
-
-.calc-table .bonus-description {
-  text-align: center;
-}
-
-.calc-table .bonuses-hr {
-  margin-left: 20px;
-  display:block;
-  border:0;
-  height:2px;
-  background-image:url(../images/hr.png);
-}
-
-.calc-table .bonus-container {
-  height: 100px;
-}
-
-.calc-table .bonus-icon {
-  float: left;
-}
-
-.calc-table .bonus-teir1, .calc-table .bonus-teir2, .calc-table .bonus-teir3,
-.calc-table .bonus-teir4, .calc-table .bonus-teir5 {
-  clear: left;
-  margin-top: -25px;
-}
-
-.calc-table .bonus-content {
-  height: 100%;
-}
-
-.calc-table .bonus-description, .calc-table .bonus-content {
-  font-family: Helvetica;
+  letter-spacing: 1px;
   font-size: 18px;
 }
 
-.conan-stat-calculator .calc-table .calc-tbody .active {
-  display: table-cell;
+.cost {
+  font-size: 14px;
 }
 
-.conan-stat-calculator .hide {
+/* campo numerico del livello corrente */
+.current-level {
+  background-image: url(../images/StatField.png);
+  background-size: 100% 100%;
+  display: inline-block;
+  min-width: 68px;
+  text-align: right;
+  padding: 2px 18px 2px 6px;
+}
+
+/* bottoni dentro cost */
+.cost button {
+  margin-left: 2px;
+}
+
+/* barra attributo sotto il blocco */
+.progress-bar {
+  margin-top: 4px;
+  position: relative;
+  height: 67px;
+  background-image: url(../images/teir0.png);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  overflow: hidden; /* IMPORTANTE: taglia la copertura */
+}
+
+/* copertura scura sopra l'immagine */
+.progress {
+  position: absolute;
+  right: 0; /* ancora a destra */
+  top: 50%; /* centro verticale */
+  transform: translateY(-50%); /* lo centriamo davvero */
+  height: 13px; /* ALTEZZA della barra “vera” */
+  width: 100%; /* JS gestisce la larghezza */
+  background: rgba(
+    0,
+    0,
+    0,
+    0.6
+  ); /* colore copertura (o luce, cambialo se vuoi) */
+  transition: width 0.25s ease-out;
+  overflow: hidden;
+  border-radius: 2px; /* opzionale, sta bene */
+}
+.progress-base {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  transition: width 0.25s ease-out;
+}
+
+/* ---------- RESET ---------- */
+
+.reset-row {
+  margin-top: 14px;
+  text-align: center;
+}
+
+.reset-row .reset-all,
+.reset-row .reset-attributes {
+  width: 40%;
+  margin: 0 4px;
+}
+
+/* ---------- BONUSES (colonna destra) ---------- */
+
+/* Tutti i blocchi bonuses di base sono nascosti */
+.bonuses {
   display: none;
 }
 
-/* END BONUSES*/
+/* quello attivo viene mostrato */
+.bonuses.active {
+  display: block;
+}
 
-/* MEDIA QUERIES */
-
-@media (max-width: 943px) {
-  .conan-stat-calculator .calc-table .calc-tbody .active {
+/* classica utility per JS */
+.hide {
   display: none;
+}
+
+/* contenuto interno del pannello bonus */
+.bonuses-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* titolo grande del ramo (Strength, Agility, …) */
+.bonus-heading {
+  font-family: "Jomhuria", serif;
+  font-size: 42px;
+  letter-spacing: 2px;
+  text-align: center;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+/* testo descrittivo iniziale */
+.bonus-description {
+  text-align: center;
+  font-size: 16px;
+  min-height: 100px;
+}
+
+/* separatore grafico */
+.bonuses-hr {
+  margin: 6px 0 10px;
+  border: 0;
+  height: 2px;
+  background-image: url(../images/hr.png);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+
+/* singolo “tier” di bonus: icona + testo */
+.bonus-container {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+/* icona grande del tier */
+.bonus-icon {
+  flex: 0 0 auto;
+  width: 100px;
+  max-width: 100px;
+}
+
+/* per i tier doppi, l’icona è più alta */
+.double-tier .bonus-icon {
+  height: 220px;
+}
+
+/* il contenuto dei perk doppi diventa una colonna flex */
+.double-tier .bonus-content {
+  display: flex;
+  flex-direction: column;
+}
+
+/* niente margine verticale default tra i label */
+.double-tier .bonus-content label {
+  margin: 0;
+}
+
+/* questo spinge il secondo label il più in basso possibile
+   rispetto al primo, occupando lo spazio libero */
+.double-tier .bonus-content .second-label {
+  margin-top: auto;
+  padding-top: 20px; /* aumenta la distanza percepita */
+}
+
+/* questo spinge il secondo label il più in basso possibile
+   rispetto al primo, occupando lo spazio libero */
+.double-tier .bonus-content .tier-label {
+  min-height: 50px;
+}
+
+/* testo bonus */
+.bonus-content {
+  flex: 1 1 auto;
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+/* radio button dei perk */
+.bonus-content label {
+  display: block;
+  margin-top: 4px;
+}
+
+/* ---------- MEDIA QUERY MOBILE ----------
+   alleggeriamo un po’ il tutto su schermi piccoli
+------------------------------------------- */
+
+@media (max-width: 600px) {
+  .calc-title {
+    font-size: 46px;
   }
 
-  .conan-stat-calculator .calc-table .encumbrance-th,
-  .conan-stat-calculator .calc-table .movement-penalty,
-  .conan-stat-calculator .calc-table .experience,
-  .conan-stat-calculator .calc-table .player-stats,
-  .conan-stat-calculator .calc-table .bonuses,
-  .conan-stat-calculator .calc-table .player-stats {
-    display: none;
+  .character-title {
+    font-size: 20px;
   }
 
-  .conan-stat-calculator,
-  .conan-stat-calculator .calc-table {
-    min-width: 427px;
+  .header-stats {
+    font-size: 12px;
+  }
+
+  .attribute {
+    font-size: 16px;
+  }
+
+  .bonus-heading {
+    font-size: 32px;
+  }
+
+  .bonus-content {
+    font-size: 15px;
   }
 }

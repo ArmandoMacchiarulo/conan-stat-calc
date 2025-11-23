@@ -80,5 +80,5 @@ You don’t need to ask for permission. A small mention of the original author a
 
 - **Updated fork (this project)**:  
   Updated for the newer attribute system and layout by **Armando Macchiarulo**
-  - Repo: <https://github.com/ArmandoMacchiarulo/conan-stat-calc>
-  - Live version: <https://armandomacchiarulo.github.io/conan-stat-calc/>
+  - Repo: <https://github.com/ArmandoMacchiarulo/conan-stat-calc-2025>
+  - Live version: <https://armandomacchiarulo.github.io/conan-stat-calc-2025/>

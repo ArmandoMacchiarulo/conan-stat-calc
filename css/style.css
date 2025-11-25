@@ -411,6 +411,11 @@ button {
   margin-top: 4px;
 }
 
+.credits > a {
+  color: #ece4c6;
+  font-weight: bold;
+}
+
 /* ---------- MEDIA QUERY MOBILE ----------
    alleggeriamo un po’ il tutto su schermi piccoli
 ------------------------------------------- */

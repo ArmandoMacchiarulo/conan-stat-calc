@@ -5,8 +5,8 @@ Made for use with the video game [Conan Exiles](https://www.conanexiles.com/).
 Interactive sandbox for manipulating your character's level, stats and attributes in a simple web app.  
 Re-allocate all your points with ease and experiment with different builds for your exile.
 
-> **This is an updated / modernized version of the original project by  
-> [CoreyKovalik](https://github.com/CoreyKovalik/conan-stat-calc) (a.k.a. Immotal).  
+> **This is an updated / modernized version of the original project by
+> [CoreyKovalik](https://github.com/CoreyKovalik/conan-stat-calc).
 > All credit for the original idea, calculations and assets goes to them.**
 
 ---
@@ -37,7 +37,7 @@ The original, now outdated, calculator can be found here:
 
 It also references:
 
-- [thrallbrowser GitHub](https://github.com/Immotal/thrallbrowser)
+- [thrallbrowser GitHub](https://github.com/CoreyKovalik/thrallbrowser)
 - [ServerThrall GitHub](https://github.com/nullsoldier/serverthrall) – Conan Exiles server management software
 
 If you like this tool, please consider checking out and supporting the original author.
@@ -72,8 +72,8 @@ You don’t need to ask for permission. A small mention of the original author a
 
 ## Credits
 
-- **Original stat calculator**:  
-  Created by [Corey Kovalik](https://github.com/CoreyKovalik) (Immotal)
+- **Original stat calculator**:
+  Created by [Corey Kovalik](https://github.com/CoreyKovalik)
 
   - Repo: <https://github.com/CoreyKovalik/conan-stat-calc>
   - Live version: <https://coreykovalik.github.io/conan-stat-calc/>
